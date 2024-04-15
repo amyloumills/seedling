@@ -1,15 +1,27 @@
 <script setup lang="ts">
-function openDialog() {
-  console.log('hello')
-}
+import { onMounted } from 'vue'
+import axios from 'axios'
+import { ref } from 'vue'
+
+const plantsData = ref([])
+
+const key = import.meta.env.VITE_API_KEY
+
+onMounted(() => {
+  axios.get(`https://perenual.com/api/species-list?key=${key}`).then((response) => {
+    console.log(response.data.data)
+
+    plantsData.value = response.data.data
+  })
+})
 </script>
 
 <template>
   <h3>Plant List</h3>
   <ul>
-    <li><a @click="openDialog">Sweet Basil</a></li>
-    <li><a>Chinese Money Plant</a></li>
-    <li><a>Monstera</a></li>
+    <li v-for="(plant, index) in plantsData" :key="index">
+      {{ index + 1 }} {{ plant.common_name }}
+    </li>
   </ul>
 </template>
 

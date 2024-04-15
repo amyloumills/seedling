@@ -4,7 +4,6 @@ import PlantList from './components/PlantList.vue'
 
 <template>
   <h1>Welcome to Seedling 🌱</h1>
-  <p>Identify and add your plants</p>
   <PlantList />
 </template>
 
