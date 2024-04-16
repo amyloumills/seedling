@@ -1,26 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import axios from 'axios'
-import { ref } from 'vue'
+import { useFetchPlants } from '../components/hooks/useFetchPlants'
 
-const plantsData = ref([])
-
-const key = import.meta.env.VITE_API_KEY
-
-onMounted(() => {
-  axios.get(`https://perenual.com/api/species-list?key=${key}`).then((response) => {
-    console.log(response.data.data)
-
-    plantsData.value = response.data.data
-  })
-})
+const { plantsData } = useFetchPlants(import.meta.env.VITE_API_KEY)
 </script>
 
 <template>
   <h3>Plant List</h3>
   <ul>
-    <li v-for="(plant, index) in plantsData" :key="index">
-      {{ index + 1 }} {{ plant.common_name }}
+    <li v-for="plant in plantsData" :key="plant.id">
+      {{ plant.common_name }}
     </li>
   </ul>
 </template>
